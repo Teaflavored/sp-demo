@@ -1,3 +1,4 @@
+import { ContentContainer } from "@/components/ContentContainer";
 import { NftsGrid } from "@/components/NftsGrid";
 import { getCollectionInfo } from "@/lib/server/opensea";
 import Image from "next/image";
@@ -33,8 +34,10 @@ const CollectionPage = async ({ params }: { params: { slug: string } }) => {
           />
         )}
       </div>
-      <h1 className="text-3xl">{collectionInfo.name}</h1>
-      <NftsGrid slug={collectionInfo.collection} />
+      <ContentContainer>
+        <h1 className="text-3xl">{collectionInfo.name}</h1>
+        <NftsGrid slug={collectionInfo.collection} />
+      </ContentContainer>
     </div>
   );
 };
