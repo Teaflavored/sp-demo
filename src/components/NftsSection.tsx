@@ -3,6 +3,7 @@
 import { Fragment, useState } from "react";
 import { NftsGrid } from "./NftsGrid";
 import { Switch } from "./ui/switch";
+import { DemoBuySection } from "./DemoBuySection";
 
 type Props = {
   slug: string;
@@ -13,7 +14,7 @@ export const NftsSection = ({ slug, infoItems }: Props) => {
   const [isBuyMode, setIsBuyMode] = useState(false);
 
   return (
-    <div>
+    <div className="flex flex-col flex-grow my-4">
       <div className="flex items-center mb-4">
         <div className="hidden md:flex gap-2">
           {infoItems.map((infoItem, idx) => {
@@ -34,6 +35,7 @@ export const NftsSection = ({ slug, infoItems }: Props) => {
         </div>
       </div>
       {!isBuyMode && <NftsGrid slug={slug} />}
+      {isBuyMode && <DemoBuySection />}
     </div>
   );
 };
