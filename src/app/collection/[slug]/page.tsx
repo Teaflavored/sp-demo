@@ -3,8 +3,6 @@ import { getCollectionInfo } from "@/lib/server/opensea";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 
-export const dynamic = "force-dynamic";
-
 const CollectionPage = async ({ params }: { params: { slug: string } }) => {
   const collectionInfo = await getCollectionInfo(params.slug);
 
