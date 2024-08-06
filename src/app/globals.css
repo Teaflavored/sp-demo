@@ -71,12 +71,3 @@
 html, body {
   height: 100%;
 }
-
-body {
-  overflow: -moz-scrollbars-none;  /* for Firefox */
-  -ms-overflow-style: none;  /* for IE and Edge */
-}
-
-::-webkit-scrollbar {
-  display: none;
-}

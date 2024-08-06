@@ -1,12 +1,12 @@
 import { ContentContainer } from "@/components/ContentContainer";
 import { NftsGrid } from "@/components/NftsGrid";
+import { NftsSection } from "@/components/NftsSection";
 import { getCollectionInfo } from "@/lib/server/opensea";
 import { format } from "date-fns";
-import { TwitterIcon, XIcon } from "lucide-react";
+import { TwitterIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { Fragment } from "react";
 
 const CollectionPage = async ({ params }: { params: { slug: string } }) => {
   const collectionInfo = await getCollectionInfo(params.slug);
@@ -81,17 +81,7 @@ const CollectionPage = async ({ params }: { params: { slug: string } }) => {
         </ContentContainer>
       </div>
       <ContentContainer>
-        <div className="flex gap-2 mb-4">
-          {info.map((infoItem, idx) => {
-            return (
-              <Fragment key={idx}>
-                <div>{infoItem}</div>
-                {idx < info.length - 1 && "·"}
-              </Fragment>
-            );
-          })}
-        </div>
-        <NftsGrid slug={collectionInfo.collection} />
+        <NftsSection slug={collectionInfo.collection} infoItems={info} />
       </ContentContainer>
     </div>
   );
