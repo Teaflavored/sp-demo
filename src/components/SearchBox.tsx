@@ -3,31 +3,44 @@
 import type { GetResponse } from "@/app/api/search/route";
 import {
   Command,
-  CommandDialog,
   CommandEmpty,
   CommandGroup,
   CommandInput,
   CommandItem,
   CommandList,
-  CommandSeparator,
-  CommandShortcut,
 } from "@/components/ui/command";
 import { api } from "@/lib/client/api";
+import { useDebouncedValue } from "@mantine/hooks";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+
+const DEBOUNCE_TIMEOUT = 200;
 
 export const SearchBox = () => {
   const [value, setValue] = useState("");
+  const [debouncedValue] = useDebouncedValue(value, DEBOUNCE_TIMEOUT);
   const [results, setResults] = useState<GetResponse["results"]>([]);
+  const [isFetching, setIsFetching] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     const fetch = async () => {
-      const data = await api.get<GetResponse>(`/search?query=${value}`);
+      setIsFetching(true);
+      try {
+        const data = await api.get<GetResponse>(
+          `/search?query=${debouncedValue}`
+        );
 
-      setResults(data.results);
+        setResults(data.results);
+      } catch (e) {
+        console.error(e);
+      } finally {
+        setIsFetching(false);
+      }
     };
 
     fetch();
-  }, [value]);
+  }, [debouncedValue]);
 
   return (
     <Command
@@ -44,11 +57,20 @@ export const SearchBox = () => {
       />
       <CommandList>
         <CommandEmpty>No results found.</CommandEmpty>
-        <CommandGroup heading="Collections">
-          {results.map((result) => (
-            <CommandItem key={result}>{result}</CommandItem>
-          ))}
-        </CommandGroup>
+        {!!results.length && (
+          <CommandGroup heading="Collections">
+            {results.map((result) => (
+              <CommandItem
+                key={result}
+                onSelect={() => {
+                  router.push(`/collection/${result}`);
+                }}
+              >
+                {result}
+              </CommandItem>
+            ))}
+          </CommandGroup>
+        )}
       </CommandList>
     </Command>
   );
