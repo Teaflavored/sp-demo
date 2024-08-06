@@ -15,6 +15,13 @@ export type CollectionInfo = {
   banner_image_url: string;
   owner: string;
   total_supply: number;
+  twitter_username: string;
+  opensea_url: string;
+  created_date: string;
+  contracts: Array<{
+    address: string;
+    chain: string;
+  }>;
 };
 
 export type Nft = {

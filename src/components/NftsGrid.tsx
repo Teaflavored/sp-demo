@@ -42,7 +42,7 @@ export const NftsGrid = ({ slug }: Props) => {
                   />
                 )}
               </div>
-              <p className="text-ellipsis overflow-hidden">
+              <p className="text-ellipsis overflow-hidden whitespace-nowrap">
                 {nft.name || `#${nft.identifier}`}
               </p>
             </li>
