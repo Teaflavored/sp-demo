@@ -12,8 +12,18 @@ const CollectionPage = async ({ params }: { params: { slug: string } }) => {
 
   return (
     <div>
-      <div className="w-full h-[300px] relative">
-        {collectionInfo.banner_image_url && (
+      <div className="w-full h-[300px] relative overflow-hidden">
+        {collectionInfo.banner_image_url &&
+        collectionInfo.banner_image_url.endsWith("mp4") ? (
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            src={collectionInfo.banner_image_url}
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+          />
+        ) : (
           <Image
             alt=""
             layout="fill"
@@ -24,7 +34,7 @@ const CollectionPage = async ({ params }: { params: { slug: string } }) => {
         )}
       </div>
       <h1 className="text-3xl">{collectionInfo.name}</h1>
-      <NftsGrid />
+      <NftsGrid slug={collectionInfo.collection} />
     </div>
   );
 };

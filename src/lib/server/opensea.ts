@@ -17,6 +17,18 @@ export type CollectionInfo = {
   total_supply: number;
 };
 
+export type Nft = {
+  collection: string;
+  contract: string;
+  description: string | null;
+  display_animation_url: string | null;
+  image_url: string | null;
+  identifier: string;
+  name: string;
+  token_standard: string;
+  opensea_url: string;
+};
+
 export const getCollectionInfo = async (
   slug: string
 ): Promise<CollectionInfo> => {
@@ -31,4 +43,41 @@ export const getCollectionInfo = async (
   );
 
   return data.json();
+};
+
+export const getNfts = async ({
+  slug,
+  limit,
+  next,
+}: {
+  slug: string;
+  limit?: number;
+  next?: string;
+}): Promise<{
+  next: string | null;
+  nfts: Nft[];
+}> => {
+  const options = {
+    method: "GET",
+    headers: sharedHeaders,
+  };
+
+  const url = new URL(`https://api.opensea.io/api/v2/collection/${slug}/nfts`);
+
+  if (limit) {
+    url.searchParams.append("limit", limit.toString());
+  }
+
+  if (next) {
+    url.searchParams.append("next", next);
+  }
+
+  const data = await fetch(url.toString(), options);
+
+  const _data = await data.json();
+
+  return {
+    next: _data.next || null,
+    nfts: _data.nfts,
+  };
 };
