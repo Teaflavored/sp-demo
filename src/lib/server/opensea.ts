@@ -21,6 +21,7 @@ export type Nft = {
   collection: string;
   contract: string;
   description: string | null;
+  display_image_url: string | null;
   display_animation_url: string | null;
   image_url: string | null;
   identifier: string;

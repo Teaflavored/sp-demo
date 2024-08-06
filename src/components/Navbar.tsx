@@ -4,7 +4,7 @@ import { ContentContainer } from "./ContentContainer";
 
 export const Navbar = () => {
   return (
-    <nav className="fixed top-0 h-[60px] bg-white border-b flex items-center w-full px-3">
+    <nav className="fixed top-0 h-[60px] bg-white border-b flex items-center w-full px-3 z-[9999]">
       <ContentContainer>
         <Link href="/">
           <Image alt="" src="/logo.svg" width={40} height={40} />

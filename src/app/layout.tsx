@@ -18,8 +18,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <Navbar />
-      <body className={clsx(inter.className, "pt-[60px]")}>{children}</body>
+      <body className={clsx(inter.className, "pt-[60px]")}>
+        <Navbar />
+        {children}
+      </body>
     </html>
   );
 }
