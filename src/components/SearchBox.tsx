@@ -20,6 +20,7 @@ export const SearchBox = () => {
   const [value, setValue] = useState("");
   const [debouncedValue] = useDebouncedValue(value, DEBOUNCE_TIMEOUT);
   const [results, setResults] = useState<GetResponse["results"]>([]);
+  const [hasFetched, setHasFetched] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
   const router = useRouter();
 
@@ -30,6 +31,7 @@ export const SearchBox = () => {
         const data = await api.get<GetResponse>(
           `/search?query=${debouncedValue}`
         );
+        setHasFetched(true);
 
         setResults(data.results);
       } catch (e) {
@@ -43,11 +45,7 @@ export const SearchBox = () => {
   }, [debouncedValue]);
 
   return (
-    <Command
-      onSelect={(val) => {
-        console.log(val);
-      }}
-    >
+    <Command>
       <CommandInput
         placeholder="Type a command or search..."
         value={value}
@@ -56,17 +54,20 @@ export const SearchBox = () => {
         }}
       />
       <CommandList>
-        <CommandEmpty>No results found.</CommandEmpty>
+        {!isFetching && results.length === 0 && hasFetched && (
+          <CommandEmpty>No results found.</CommandEmpty>
+        )}
+        {isFetching && <CommandEmpty>Loading...</CommandEmpty>}
         {!!results.length && (
           <CommandGroup heading="Collections">
             {results.map((result) => (
               <CommandItem
-                key={result}
+                key={result.collectionSlug}
                 onSelect={() => {
-                  router.push(`/collection/${result}`);
+                  router.push(`/collection/${result.collectionSlug}`);
                 }}
               >
-                {result}
+                {result.collectionName}
               </CommandItem>
             ))}
           </CommandGroup>
