@@ -23,7 +23,11 @@ export const GET = async (req: NextRequest) => {
     merge({}, Object.fromEntries(req.nextUrl.searchParams.entries()))
   );
 
-  const { next, nfts } = await getNfts({ slug, limit, next: previousNext });
+  const { next, nfts } = await getNfts({
+    slug,
+    limit: limit || 20,
+    next: previousNext,
+  });
 
   return NextResponse.json<GetResponse>({ next, nfts }, { status: 200 });
 };

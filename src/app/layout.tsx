@@ -3,6 +3,7 @@ import { DM_Sans } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import clsx from "clsx";
+import { Providers } from "@/components/Providers";
 
 const dmSans = DM_Sans({ subsets: ["latin"] });
 
@@ -18,10 +19,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={clsx(dmSans.className, "pt-[60px]")}>
-        <Navbar />
-        {children}
-      </body>
+      <Providers>
+        <body className={clsx(dmSans.className, "pt-[60px]")}>
+          <Navbar />
+          {children}
+        </body>
+      </Providers>
     </html>
   );
 }
