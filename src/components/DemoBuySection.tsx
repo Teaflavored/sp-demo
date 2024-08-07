@@ -75,7 +75,7 @@ export const DemoBuySection = ({ slug }: Props) => {
 
   const imageUrl = nft.display_image_url || nft.image_url;
   const price = listing.price.current.value;
-  const owner = nft.owners[0].address;
+  const owner = nft.owners?.[0]?.address;
 
   return (
     <div className="flex items-center justify-center h-full">
