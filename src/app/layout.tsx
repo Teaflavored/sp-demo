@@ -4,6 +4,7 @@ import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import clsx from "clsx";
 import { Providers } from "@/components/Providers";
+import { Toaster } from "@/components/ui/toaster";
 
 const dmSans = DM_Sans({ subsets: ["latin"] });
 
@@ -23,6 +24,7 @@ export default function RootLayout({
         <body className={clsx(dmSans.className, "pt-[60px]")}>
           <Navbar />
           {children}
+          <Toaster />
         </body>
       </Providers>
     </html>

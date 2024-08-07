@@ -35,7 +35,7 @@ export const NftsSection = ({ slug, infoItems }: Props) => {
         </div>
       </div>
       {!isBuyMode && <NftsGrid slug={slug} />}
-      {isBuyMode && <DemoBuySection />}
+      {isBuyMode && <DemoBuySection slug={slug} />}
     </div>
   );
 };
